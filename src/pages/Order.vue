@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="taxi">
     <tGisMap
-        :center="[54.98, 82.89]"
-        :marker="[54.98, 82.89]"
-        :styles="{width: '100%', height: '100vh'}"
-        :zoom="16"/>
+        :center="[51.12, 71.43]"
+        :marker="[51.12, 71.43]"
+        :styles="{width: '100%', height: '94vh'}"
+        :zoom="12"/>
       <TaxiSelectingMenu/>
   </div>
 </template>
@@ -20,5 +20,8 @@ export default {
 </script>
 
 <style scoped>
-
+.taxi {
+  overflow: hidden;
+  height: 94vh;
+}
 </style>
