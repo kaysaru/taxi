@@ -50,5 +50,7 @@ export default {
 </script>
 
 <style scoped>
-
+#map {
+  z-index: 0;
+}
 </style>
