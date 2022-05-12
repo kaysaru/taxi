@@ -1,15 +1,16 @@
 <template>
-<!--  <img alt="Vue logo" src="./assets/logo.png">-->
-  <Index/>
+  <!--  <img alt="Vue logo" src="./assets/logo.png">-->
+  <Navbar/>
+  <router-view/>
 </template>
 
 <script>
-import Index from "@/components/Index.vue";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
   name: 'App',
   components: {
-    Index
+    Navbar
   }
 }
 </script>

@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "2gis-maps": "^3.7.1",
+    "bootstrap-icons": "^1.8.1",
     "core-js": "^3.22.5",
     "vue": "^3.2.13",
     "vue-router": "^4.0.15",
