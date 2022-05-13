@@ -35,32 +35,20 @@ export default {
     return {
       map: null,
       marker_from: null,
-      marker_to: null,
-      marker_to_coords: {
-        lat: null,
-        lng: null
-      },
-      marker_from_coords: {
-        lat: null,
-        lng: null
-      }
+      marker_to: null
     }
   },
   methods: {
     trackMarkers() {
       if(this.order_menu === true) {
-        this.marker_to_coords.lat = this.marker_to._latlng.lat;
-        this.marker_to_coords.lng = this.marker_to._latlng.lng;
-        this.marker_from_coords.lat = this.marker_from._latlng.lat;
-        this.marker_from_coords.lng = this.marker_from._latlng.lng;
 
         let mtc = {
-          lat: this.marker_to_coords.lat,
-          lng: this.marker_to_coords.lng
+          lat: this.marker_to._latlng.lat,
+          lng: this.marker_to._latlng.lng
         }
         let mfc = {
-          lat: this.marker_from_coords.lat,
-          lng: this.marker_from_coords.lng
+          lat: this.marker_from._latlng.lat,
+          lng: this.marker_from._latlng.lng
         }
         this.$emit('coords', {mtc: mtc, mfc: mfc})
       }
@@ -85,7 +73,7 @@ export default {
         }).addTo(this.map).bindPopup('Точка прибытия');
 
         // eslint-disable-next-line no-undef
-        this.marker_from = DG.marker([51.12, 71.50], {
+        this.marker_from = DG.marker([51.13, 71.45], {
           draggable: true
         }).addTo(this.map).bindPopup('Точка отправления');
       } else {

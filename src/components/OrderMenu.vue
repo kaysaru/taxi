@@ -6,7 +6,9 @@
       </div>
       <div class="card">
         <div class="card-body">
-          <input type="text" v-model="name">
+          <div class="input-group mb-0">
+            <span class="input-group-text">Имя</span>
+            <input type="text" class="form-control" v-model="name"></div>
         </div>
       </div>
       <div class="card">
@@ -30,7 +32,7 @@
             <h5 class="card-title">{{ travel_type === 'taxi' ? 'Такси' : 'Доставка' }}</h5>
           </div>
         </div>
-        <button type="button" class="btn btn-lg btn-outline-primary mt-3">Заказать</button>
+        <button type="button" class="btn btn-lg btn-outline-primary mt-3" @click="saveOrder">Заказать</button>
       </div>
     </div>
   </div>
@@ -40,8 +42,23 @@
 export default {
   name: "OrderMenu",
   props: {
-    marker_from_coords: Object,
-    marker_to_coords: Object,
+    marker_from_coords: {
+      type: Object,
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default() {
+        return {
+          lat: 0, lng: 0
+        }
+      }
+    },
+    marker_to_coords: {
+      type: Object,
+      default() {
+        return {
+          lat: 0, lng: 0
+        }
+      }
+    },
     travel_type: String
   },
   data() {
@@ -88,9 +105,9 @@ export default {
 .taxi-menu {
   position: absolute;
   background-color: white;
-  top: 33em;
+  top: 30em;
   width: 100%;
   padding: 1em;
-  height: 39vh;
+  height: 45vh;
 }
 </style>

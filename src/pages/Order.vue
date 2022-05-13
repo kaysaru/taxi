@@ -38,8 +38,14 @@ export default {
       order_menu: false,
       scroll: 740,
       travelType: 'taxi',
-      marker_to_coords: null,
-      marker_from_coords: null
+      marker_to_coords: {
+        lat: 0,
+        lng: 0
+      },
+      marker_from_coords: {
+        lat: 0,
+        lng: 0
+      }
     }
   },
   methods: {
