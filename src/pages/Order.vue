@@ -1,14 +1,26 @@
 <template>
   <div class="taxi">
-    <tGisMap
-        @click="closeMenu"
-        :center="[51.12, 71.43]"
-        :marker="[51.12, 71.43]"
-        :styles="{width: '100%', height: '94vh'}"
-        :zoom="12"/>
-    <TaxiSelectingMenu
-        @wheel="scrollControl" @="drag"
-        :top="scroll"
+    <tGisMap class="tgmap"
+             @click="closeMenu"
+             @coords="handleCoords"
+             :center="[51.12, 71.43]"
+             :marker="[51.12, 71.43]"
+             :styles="{width: '100%', height: '94vh'}"
+             :zoom="12"
+             :order_menu="order_menu"
+    />
+    <TaxiSelectingMenu v-if="order_menu !== true"
+                       :top="scroll"
+                       @click="open"
+                       @route="order_menu = true"
+                       @traveltype="travelTypeChange"
+                       @wheel="scrollControl"
+    />
+    <OrderMenu v-if="order_menu === true"
+               @routeclose="order_menu = false"
+               :travel_type="travelType"
+               :marker_to_coords="marker_to_coords"
+               :marker_from_coords="marker_from_coords"
     />
   </div>
 </template>
@@ -16,13 +28,18 @@
 <script>
 import tGisMap from "@/components/tGisMap"
 import TaxiSelectingMenu from "@/components/TaxiSelectingMenu";
+import OrderMenu from "@/components/OrderMenu";
 
 export default {
   name: "Order",
-  components: {TaxiSelectingMenu, tGisMap},
+  components: {OrderMenu, TaxiSelectingMenu, tGisMap},
   data() {
     return {
-      scroll: 740
+      order_menu: false,
+      scroll: 740,
+      travelType: 'taxi',
+      marker_to_coords: null,
+      marker_from_coords: null
     }
   },
   methods: {
@@ -30,18 +47,25 @@ export default {
       if (this.scroll <= this.max && this.scroll >= this.min)
         this.scroll += e.deltaY * -0.4
     },
+    handleCoords(e) {
+      this.marker_to_coords = e.mtc
+      this.marker_from_coords = e.mfc
+    },
+    travelTypeChange(e) {
+      this.travelType = e.travelType;
+    },
     closeMenu() {
       this.scroll = this.max
     },
-    open(e) {
+    open() {
       if (this.scroll !== this.min)
         this.scroll = this.min;
-      console.log(e)
     },
-    drag(e) {
-      console.log(e)
-      // eslint-disable-next-line no-undef
-      console.log($(document).height())
+    chooseTaxi() {
+      this.travelType = 'taxi';
+    },
+    chooseDelivery() {
+      this.travelType = 'delivery';
     }
   },
   computed: {
@@ -49,7 +73,7 @@ export default {
       return 740;
     },
     min() {
-      return 300;
+      return 510;
     }
   },
   watch: {
@@ -66,7 +90,11 @@ export default {
 <style scoped>
 .taxi {
   height: 94vh;
-  position: relative;
+  width: 100%;
   overflow: hidden;
+}
+
+.tgmap {
+  position: absolute;
 }
 </style>

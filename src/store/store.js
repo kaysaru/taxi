@@ -6,7 +6,8 @@ export const store = createStore({
             count: 0,
             cart: [],
             brands: [],
-            items: []
+            items: [],
+            orders: []
         }
     },
     getters: {
@@ -26,6 +27,12 @@ export const store = createStore({
         },
         getItemById(state, i) {
             return state.items[i];
+        },
+        getOrders(state) {
+            return state.orders;
+        },
+        getOrderById(state, i) {
+            return state.orders[i];
         }
     },
     mutations: {
@@ -36,6 +43,14 @@ export const store = createStore({
             for(let i = 0; i < state.cart.length; ++i)
                 if(item.id === state.cart[i].id)
                     state.cart.splice(i, 1);
+        },
+        addToOrders(state, item) {
+            state.orders.push(item);
+        },
+        removeFromOrders(state, item) {
+            for(let i = 0; i < state.orders.length; ++i)
+                if(item.id === state.orders[i].id)
+                    state.orders.splice(i, 1);
         },
         setItems(state, items) {
             state.items = items;
