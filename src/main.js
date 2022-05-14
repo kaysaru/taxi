@@ -1,9 +1,8 @@
-import { createApp } from 'vue'
-import { store } from "@/store/store";
-import { routes } from "./router/routes"
-import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
-
+import {createApp} from 'vue'
+import {createRouter, createWebHistory} from 'vue-router'
+import {routes} from "./router/routes"
+import {store} from "@/store/store";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -16,10 +15,3 @@ app.use(router)
 app.use(store)
 
 app.mount('#app')
-
-
-
-
-
-
-// Install the store instance as a plugin

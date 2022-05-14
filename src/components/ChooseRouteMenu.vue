@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex container">
-    <div class="taxi-menu border border-primary">
+  <div class="d-flex container" :class="menuStyle">
+    <div class="taxi-menu rounded-3">
       <div class="d-flex justify-content-end">
         <button type="button" class="btn-close mb-3" @click="$emit('routeclose')" aria-label="Close"></button>
       </div>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: "OrderMenu",
+  name: "ChooseRouteMenu",
   props: {
     marker_from_coords: {
       type: Object,
@@ -68,8 +68,12 @@ export default {
         route_to: '',
         time: Date
       },
-      name: ''
+      name: '',
+      isCreated: false
     }
+  },
+  created() {
+    this.isCreated = true
   },
   methods: {
     saveOrder() {
@@ -80,23 +84,42 @@ export default {
         date: this.getDate
       }
       console.log(order)
+      this.$store.commit("addToOrders", order)
+      this.$emit('routeclose')
     }
   },
   computed: {
     route_to() {
-      return this.marker_to_coords.lat + ", " + this.marker_to_coords.lng
+      return this.marker_to_coords.lat.toFixed(3) + ", " + this.marker_to_coords.lng.toFixed(3)
     },
     route_from() {
-      return this.marker_from_coords.lat + ", " + this.marker_from_coords.lng
+      return this.marker_from_coords.lat.toFixed(3) + ", " + this.marker_from_coords.lng.toFixed(3)
     },
     getDate() {
       return new Date().toLocaleString()
+    },
+    menuStyle() {
+      return {
+        'new-container': this.isCreated
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+@keyframes append-animate {
+  from {
+    transform: translateY(1000px);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.new-container {
+  animation: append-animate .2s linear
+}
 
 .container {
   position: relative;

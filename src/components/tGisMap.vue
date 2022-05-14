@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     trackMarkers() {
-      if(this.order_menu === true) {
+      if (this.order_menu === true) {
 
         let mtc = {
           lat: this.marker_to._latlng.lat,

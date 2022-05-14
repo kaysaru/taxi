@@ -9,14 +9,14 @@
              :zoom="12"
              :order_menu="order_menu"
     />
-    <TaxiSelectingMenu v-if="order_menu !== true"
+    <MapMenu v-if="order_menu !== true"
                        :top="scroll"
                        @click="open"
                        @route="order_menu = true"
                        @traveltype="travelTypeChange"
                        @wheel="scrollControl"
     />
-    <OrderMenu v-if="order_menu === true"
+    <ChooseRouteMenu v-if="order_menu === true"
                @routeclose="order_menu = false"
                :travel_type="travelType"
                :marker_to_coords="marker_to_coords"
@@ -27,12 +27,12 @@
 
 <script>
 import tGisMap from "@/components/tGisMap"
-import TaxiSelectingMenu from "@/components/TaxiSelectingMenu";
-import OrderMenu from "@/components/OrderMenu";
+import MapMenu from "@/components/MapMenu";
+import ChooseRouteMenu from "@/components/ChooseRouteMenu";
 
 export default {
   name: "Order",
-  components: {OrderMenu, TaxiSelectingMenu, tGisMap},
+  components: {ChooseRouteMenu, MapMenu, tGisMap},
   data() {
     return {
       order_menu: false,

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="taxi-menu border border-primary" :style="{top: this.top + 'px'}">
+    <div class="taxi-menu rounded-3" :style="topStyle">
       <div class="row mb-2">
         <div class="col">
           <div class="card" @click="$emit('route', travelType)">
@@ -25,8 +25,7 @@
       <div>
         <div class="row mb-2">
           <div class="col col pe-1">
-            <div class="card" @click="this.travelType = 'taxi'"
-                 :style="{'background-color': (this.travelType === 'taxi') ? 'lightgray' : 'inherit'}">
+            <div class="card" @click="this.travelType = 'taxi'" :class="{'card-active': this.travelType === 'taxi'}">
               <div class="card-body">
                 <h5 class="card-title">Такси</h5>
                 <span class="arrow">
@@ -39,13 +38,14 @@
             </div>
           </div>
           <div class="col col ps-1">
-            <div class="card" @click="this.travelType = 'delivery'"
-                 :style="{'background-color': (this.travelType === 'delivery') ? 'lightgray' : 'inherit'}">
+            <div class="card" @click="this.travelType = 'delivery'" :class="{'card-active': this.travelType === 'delivery'}">
               <div class="card-body">
                 <h5 class="card-title">Доставка</h5>
                 <span class="arrow">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-box2-fill" viewBox="0 0 16 16">
-                    <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4h-8.5ZM15 4.667V5H1v-.333L1.5 4h6V1h1v3h6l.5.667Z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                       class="bi bi-box2-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4h-8.5ZM15 4.667V5H1v-.333L1.5 4h6V1h1v3h6l.5.667Z"/>
                   </svg>
                 </span>
               </div>
@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  name: "TaxiSelectingMenu",
+  name: "MapMenu",
   props: {
     top: {
       type: Number,
@@ -79,8 +79,16 @@ export default {
       this.travelType = 'delivery';
     }
   },
+  computed: {
+    topStyle() {
+      return {
+        top: this.top * 0.06 + 'em',
+        transition: '0.1s ease-out',
+      }
+    }
+  },
   watch: {
-    travelType () {
+    travelType() {
       this.$emit('traveltype', this.travelType)
     }
   }
@@ -88,7 +96,6 @@ export default {
 </script>
 
 <style scoped>
-
 .taxi-menu {
   position: absolute;
   background-color: white;
@@ -102,11 +109,20 @@ export default {
 }
 
 .card:hover {
+  background-color: #eaeaea;
+}
+
+.card:active {
+  background-color: lightgray;
+}
+
+.card-active {
   background-color: lightgray;
 }
 
 .card {
   cursor: pointer;
+  transition: background-color .1s linear 100ms
 }
 
 .arrow {
