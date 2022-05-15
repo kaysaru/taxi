@@ -2,7 +2,7 @@
   <div class="d-flex container" :class="menuStyle">
     <div class="taxi-menu rounded-3">
       <div class="d-flex justify-content-end">
-        <button type="button" class="btn-close mb-3" @click="$emit('routeclose')" aria-label="Close"></button>
+        <button type="button" class="btn-close mb-3" @click="closeMenu" aria-label="Close"></button>
       </div>
       <div class="card">
         <div class="card-body">
@@ -83,9 +83,12 @@ export default {
         route_to: this.route_to,
         date: this.getDate
       }
-      console.log(order)
       this.$store.commit("addToOrders", order)
       this.$emit('routeclose')
+    },
+    closeMenu() {
+      this.isCreated = false
+      setTimeout(() => this.$emit('routeclose'), 100)
     }
   },
   computed: {
@@ -100,7 +103,8 @@ export default {
     },
     menuStyle() {
       return {
-        'new-container': this.isCreated
+        'new-container': this.isCreated,
+        'destroy-container': !this.isCreated
       }
     }
   }
@@ -108,7 +112,7 @@ export default {
 </script>
 
 <style scoped>
-@keyframes append-animate {
+@keyframes append-anim {
   from {
     transform: translateY(1000px);
   }
@@ -117,8 +121,21 @@ export default {
   }
 }
 
+@keyframes destroy-anim {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(1000px);
+  }
+}
+
 .new-container {
-  animation: append-animate .2s linear
+  animation: append-anim .1s linear
+}
+
+.destroy-container {
+  animation: destroy-anim .1s linear;
 }
 
 .container {

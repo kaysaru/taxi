@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :class="createdStyle">
     <div class="taxi-menu rounded-3" :style="topStyle">
       <div class="row mb-2">
         <div class="col">
@@ -68,8 +68,12 @@ export default {
   },
   data() {
     return {
-      travelType: 'taxi'
+      travelType: 'taxi',
+      isCreated: false,
     }
+  },
+  created() {
+    this.isCreated = true
   },
   methods: {
     chooseTaxi() {
@@ -85,6 +89,12 @@ export default {
         top: this.top * 0.06 + 'em',
         transition: '0.1s ease-out',
       }
+    },
+    createdStyle () {
+      return {
+        'new-container': this.isCreated,
+        'destroy-container': !this.isCreated
+      }
     }
   },
   watch: {
@@ -96,6 +106,33 @@ export default {
 </script>
 
 <style scoped>
+
+@keyframes append-anim {
+  from {
+    transform: translateY(1000px);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes destroy-anim {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(1000px);
+  }
+}
+
+.new-container {
+  animation: append-anim .1s linear
+}
+
+.destroy-container {
+  animation: destroy-anim .1s linear;
+}
+
 .taxi-menu {
   position: absolute;
   background-color: white;

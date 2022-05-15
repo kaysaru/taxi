@@ -10,17 +10,17 @@
              :order_menu="order_menu"
     />
     <MapMenu v-if="order_menu !== true"
-                       :top="scroll"
-                       @click="open"
-                       @route="order_menu = true"
-                       @traveltype="travelTypeChange"
-                       @wheel="scrollControl"
+             :top="scroll"
+             @click="open"
+             @route="order_menu = true"
+             @traveltype="travelTypeChange"
+             @wheel="scrollControl"
     />
     <ChooseRouteMenu v-if="order_menu === true"
-               @routeclose="order_menu = false"
-               :travel_type="travelType"
-               :marker_to_coords="marker_to_coords"
-               :marker_from_coords="marker_from_coords"
+                     @routeclose="order_menu = false"
+                     :travel_type="travelType"
+                     :marker_to_coords="marker_to_coords"
+                     :marker_from_coords="marker_from_coords"
     />
   </div>
 </template>
