@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       route: {
+        name: '',
         route_from: '',
         route_to: '',
         time: Date
