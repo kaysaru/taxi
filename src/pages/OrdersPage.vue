@@ -47,12 +47,7 @@ export default {
 
 <style scoped>
 .max-height {
-  max-height: 10vh;
-  min-height: 10vh;
+  min-height: 20vh;
   overflow: hidden;
-}
-
-.overflow {
-  overflow-y: scroll !important;
 }
 </style>

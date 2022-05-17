@@ -29,6 +29,12 @@ export default {
         return {width: '500px', height: '400px'}
       }
     },
+    static: {
+      type: Boolean,
+      default: () => {
+        return false
+      }
+    },
     order_menu: Boolean
   },
   data() {
@@ -57,7 +63,15 @@ export default {
       // eslint-disable-next-line no-undef
       this.map = DG.map(this.$refs.map, {
         'center': this.center,
-        'zoom': this.zoom
+        'zoom': this.zoom,
+        'dragging': !this.static,
+        'touchZoom': !this.static,
+        'scrollWheelZoom': !this.static,
+        'doubleClickZoom': !this.static,
+        'boxZoom': !this.static,
+        'geoclicker': !this.static,
+        'zoomControl': !this.static,
+        'fullscreenControl': !this.static
       });
     }
   },
