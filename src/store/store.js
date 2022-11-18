@@ -3,7 +3,9 @@ import {createStore} from "vuex";
 export const store = createStore({
     state() {
         return {
-            orders: []
+            orders: [],
+            loggedIn: false,
+            user: null
         }
     },
     getters: {
@@ -12,6 +14,12 @@ export const store = createStore({
         },
         getOrderById(state, i) {
             return state.orders[i];
+        },
+        isLoggedIn(state) {
+            return state.loggedIn;
+        },
+        getUser(state) {
+            return state.user;
         }
     },
     mutations: {
@@ -22,6 +30,12 @@ export const store = createStore({
             for (let i = 0; i < state.orders.length; ++i)
                 if (item.id === state.orders[i].id)
                     state.orders.splice(i, 1);
+        },
+        setLoggedIn(state, flag) {
+            state.loggedIn = flag;
+        },
+        setUser(state, user) {
+            state.user = user;
         }
     }
 })

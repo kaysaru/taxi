@@ -70,22 +70,51 @@ export default {
         time: Date
       },
       name: '',
-      isCreated: false
+      isCreated: false,
+      success: false
     }
   },
   created() {
     this.isCreated = true
   },
   methods: {
-    saveOrder() {
-      let order = {
-        name: this.name,
-        route_from: this.route_from,
-        route_to: this.route_to,
-        date: this.getDate
+    async saveOrder() {
+      const url = "http://localhost:3000/api/addorder";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          'Access-Control-Allow-Origin': '*',
+          'x-access-token': this.$store.getters.getUser.accessToken
+        },
+        body: JSON.stringify({
+          name: this.name,
+          from: this.route_from,
+          to: this.route_to,
+          referer: this.$store.getters.getUser.username
+        }),
+      };
+      await fetch(url, options)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message === "Order was added!")
+              this.success = true
+          }).catch((e) => {
+        console.error(e)
+      })
+      if (this.success) {
+        let order = {
+          name: this.name,
+          route_from: this.route_from,
+          route_to: this.route_to,
+          date: this.getDate
+        }
+        this.$store.commit("addToOrders", order)
+        this.$emit('routeclose')
+        await this.$router.push("/orders")
       }
-      this.$store.commit("addToOrders", order)
-      this.$emit('routeclose')
+
     },
     closeMenu() {
       this.isCreated = false
